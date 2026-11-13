@@ -1,4 +1,4 @@
-package com.eazygo.demo;
+package com.eazygo.demo.Entities;
 import lombok.Getter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,5 +16,13 @@ public class DailyPoll {
         this.data = data;
         this.horarioAbertura = data.minusDays(1).atTime(18,30);
         this.horarioFechamento = data.atTime(4,0);
+    }
+
+    public LocalDateTime getHorarioAbertura() {
+        return horarioAbertura;
+    }
+
+    public LocalDateTime getHorarioFechamento() {
+        return horarioFechamento;
     }
 }
