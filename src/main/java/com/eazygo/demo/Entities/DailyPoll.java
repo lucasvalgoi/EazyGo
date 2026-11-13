@@ -17,4 +17,12 @@ public class DailyPoll {
         this.horarioAbertura = data.minusDays(1).atTime(18,30);
         this.horarioFechamento = data.atTime(4,0);
     }
+
+    public LocalDateTime getHorarioAbertura() {
+        return horarioAbertura;
+    }
+
+    public LocalDateTime getHorarioFechamento() {
+        return horarioFechamento;
+    }
 }
