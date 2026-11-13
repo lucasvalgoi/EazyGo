@@ -1,15 +1,13 @@
-package com.eazygo.demo.Services;
-import com.eazygo.demo.DailyPoll;
+package com.eazygo.demo.Entities;
+
+import com.eazygo.demo.Entities.StatusResposta;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
-import java.time.LocalDateTime;
 
-/* CLASSE DE RESPOSTAS ENQUETE */
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Service
 public class PollResponse {
     private int id; //identificacao de cada pessoa
     private LocalDateTime horarioResposta;
@@ -17,11 +15,14 @@ public class PollResponse {
     private DailyPoll enquete;
     private StatusResposta status;
 
-    public PollResponse(LocalDateTime horarioResposta, String usuario, DailyPoll enquete) {
+    public PollResponse(LocalDateTime horarioResposta, String usuario, DailyPoll enquete, StatusResposta status) {
         this.horarioResposta = LocalDateTime.now();
         this.usuario = usuario;
         this.enquete = enquete;
         this.status = status;
+    }
+
+    public void confirmarParticipacao() {
 
     }
 }

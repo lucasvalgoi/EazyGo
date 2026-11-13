@@ -1,4 +1,4 @@
-package com.eazygo.demo;
+package com.eazygo.demo.Entities;
 import lombok.Getter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
