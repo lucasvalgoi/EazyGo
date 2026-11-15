@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@Service
 public class PollResponse {
     private int id; //identificacao de cada pessoa
     private LocalDateTime horarioResposta;
