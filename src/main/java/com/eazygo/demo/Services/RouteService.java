@@ -9,7 +9,11 @@ import java.util.stream.Collectors;
 
 @Service//anotação da classe pertencente ao package de services
 public class RouteService {
+    //
+    //
     private static final List<Route> mockedDB = new ArrayList<>();//lista de informações mockadas para as rotas
+    //
+    //
     private static Long idCounter = 1L;//contador de ids para iteração dentro da lista de dados das rotas
 
     //CRIAÇÃO DE ROTA + VERIFICAÇÃO MÁX. 3 ROTAS POR USER
