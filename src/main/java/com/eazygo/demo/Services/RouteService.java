@@ -12,6 +12,7 @@ public class RouteService {
     private static final List<Route> mockedDB = new ArrayList<>();//lista de informações mockadas para as rotas
     private static Long idCounter = 1L;//contador de ids para iteração dentro da lista de dados das rotas
 
+    //CRIAÇÃO DE ROTA + VERIFICAÇÃO MÁX. 3 ROTAS POR USER
     public Route createRoute(Long userId, Route newRoute){
         //verificação das rotas do usuário na lista
         //.stream() cria fluxo de elementos a partir da lista de dados
@@ -34,6 +35,7 @@ public class RouteService {
         return newRoute;
     }
 
+    //LISTAGEM DAS ROTAS DO USER
     public List<Route> getUserRoutes(Long userId){
         return mockedDB.stream()
                 .filter(route -> route.getUserId().equals(userId))
@@ -41,6 +43,7 @@ public class RouteService {
         //passaram pelo filtro e joga em uma nova lista pronta para requisição
     }
 
+    //ATUALIZAÇÃO DOS DADOS DA ROTA SELECIONADA PELO USER
     public Route updateRoute(Long routeId, Route updateData){
         Route existingRoute = mockedDB.stream()
                 .filter(route -> route.getId().equals(routeId))
@@ -58,6 +61,7 @@ public class RouteService {
         return existingRoute;
     }
 
+    //SELEÇÃO DA ROTA PARA O DIA ATUAL
     public Route selectTodaysRoute(Long userId, Long routeId){
         List<Route> userRoutes = getUserRoutes(userId);
         Route selectedRoute = null;
