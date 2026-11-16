@@ -47,6 +47,7 @@ public class RouteService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Rota não encontrada"));
 
+    //atualizando novos dados da rota já existente do usuário
         existingRoute.setLocalNickname(updateData.getLocalNickname());
         existingRoute.setStreet(updateData.getStreet());
         existingRoute.setNumber(updateData.getNumber());
@@ -57,4 +58,21 @@ public class RouteService {
         return existingRoute;
     }
 
+    public Route selectTodaysRoute(Long userId, Long routeId){
+        List<Route> userRoutes = getUserRoutes(userId);
+        Route selectedRoute = null;
+
+        for(Route route : userRoutes){
+            if(route.getId().equals(routeId)){
+                route.setActiveToday(true);
+                selectedRoute = route;
+            } else {
+                route.setActiveToday(false);
+            }
+        }
+        if(selectedRoute == null){
+            throw new RuntimeException("Rota não encontrada ou não pertencente ao usuário");
+        }
+        return selectedRoute;
+    }
 }
