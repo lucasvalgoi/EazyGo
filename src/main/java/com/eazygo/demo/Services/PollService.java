@@ -1,17 +1,19 @@
 package com.eazygo.demo.Services;
 
 import com.eazygo.demo.Entities.DailyPoll;
-import com.eazygo.demo.Entities.PollResponse;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.eazygo.demo.Entities.PollResponseStatus.CANCELADO;
+import static com.eazygo.demo.Entities.PollResponseStatus.CONFIRMADO;
+
 @Service
 public class PollService {
 
-    private List<PollResponse> respostas = new ArrayList<>(); //guardar as respostas da enquete
+    private List<DailyPoll> respostas = new ArrayList<>(); //guardar as respostas da enquete
     private String Usuario;
 
     private boolean validarHorario(DailyPoll poll) {
@@ -34,15 +36,15 @@ public class PollService {
     }
 
     public String confirmarPresenca(DailyPoll poll){
-        if(validarHorario(poll)){
-            return "Presença confirmada!";
-        }
-        else{
-            return "Presença não confirmada! Fora do horário estabelecido.";
-        }
+        poll.setStatus(CONFIRMADO);
+        respostas.add(poll);
+        return "Presença Confirmada";
+        //tem que validar horario
     }
 
-    public String cancelarPresenca(){
-        return"Presença Cancelada!";
+    public String cancelarPresenca(DailyPoll poll){
+        poll.setStatus(CANCELADO);
+        respostas.add(poll);
+        return "Presença Cancelada";
     }
 }

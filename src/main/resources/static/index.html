@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Enquete</title>
+</head>
+<body>
+    <form method="POST">
+        <h2>Enquete de presença para utilização do transporte</h2>
+
+        <!-- Nome -->
+        <label>
+            Nome:
+            <input type="text" name="nome" placeholder="Digite seu nome" required>
+        </label><br><br>
+
+        <!-- Campo caixa de seleção -->
+        <label for="endereco">Endereço:</label>
+
+        <select name="endereco" id="endereco" required>
+            <option value="" selected disabled>Selecione um endereço</option>
+            <option value="Endereço 1">Endereço 1</option>
+            <option value="Endereço 2">Endereço 2</option>
+            <option value="Endereço 3">Endereço 3</option>
+        </select><br><br>
+
+        <h3>Você irá utilizar o transporte hoje?</h3>
+
+        <!-- Confirmar Presenca -->
+        <label>
+            <input type="radio" formaction="/api/poll/confirmar" name="presenca" value="confirmarPresenca" required>
+            Sim, confirmo a minha presença
+        </label><br><br>
+
+        <!-- Cancelar Presenca -->
+        <label>
+            <input type="radio" formaction="/api/poll/cancelar" name="presenca" value="CancelarPresenca" required>
+            Não, não confirmo a minha presença
+        </label><br><br>
+
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>
