@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service//anotação da classe pertencente ao package de services
 public class RouteService {
@@ -32,4 +33,28 @@ public class RouteService {
         mockedDB.add(newRoute);//adicionando novos dados da rota a lista de dados mockados
         return newRoute;
     }
+
+    public List<Route> getUserRoutes(Long userId){
+        return mockedDB.stream()
+                .filter(route -> route.getUserId().equals(userId))
+                .collect(Collectors.toList());//captura todas as rotas que
+        //passaram pelo filtro e joga em uma nova lista pronta para requisição
+    }
+
+    public Route updateRoute(Long routeId, Route updateData){
+        Route existingRoute = mockedDB.stream()
+                .filter(route -> route.getId().equals(routeId))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Rota não encontrada"));
+
+        existingRoute.setLocalNickname(updateData.getLocalNickname());
+        existingRoute.setStreet(updateData.getStreet());
+        existingRoute.setNumber(updateData.getNumber());
+        existingRoute.setNeighborhood(updateData.getNeighborhood());
+        existingRoute.setCity(updateData.getCity());
+        existingRoute.setZipCode(updateData.getZipCode());
+
+        return existingRoute;
+    }
+
 }
