@@ -4,6 +4,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /* CLASSE DA ENQUETE */
 
@@ -25,6 +26,21 @@ public class DailyPoll {
 
     @Getter
     private LocalDateTime horarioFechamento;
+
+    // CONSTRUTOR NOVO (vazio): o Spring usa esse para criar o objeto do formulário
+    public DailyPoll() {
+        LocalDate hoje = LocalDate.now();
+
+        // antes das 4h ainda é a enquete de hoje; depois, é a de amanhã
+        if (LocalTime.now().isBefore(LocalTime.of(4, 0))) {
+            this.data = hoje;
+        } else {
+            this.data = hoje.plusDays(1);
+        }
+
+        this.horarioAbertura = this.data.minusDays(1).atTime(18, 30);
+        this.horarioFechamento = this.data.atTime(4, 0);
+    }
 
      public DailyPoll(LocalDate data) {
         this.data = data;
