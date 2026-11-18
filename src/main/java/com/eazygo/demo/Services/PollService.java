@@ -1,6 +1,8 @@
 package com.eazygo.demo.Services;
 
 import com.eazygo.demo.Entities.DailyPoll;
+import com.eazygo.demo.Entities.PollResponseStatus;
+import com.eazygo.demo.Entities.PollStatusResponse;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +59,22 @@ public class PollService {
         respostas.add(poll);
         System.out.println(respostas.size() + " resposta(s) guardada(s)");
         return "Presença Cancelada";
+    }
+
+    // serve para saber se a enquete está aberta e ver o que o usuario respondeu
+    public PollStatusResponse consultarStatus(String usuario) {
+        DailyPoll enquete = new DailyPoll(); // usa o construtor vazio criado para o questionario
+        boolean aberta = validarHorario(enquete);
+
+        PollResponseStatus status = null; // null = usuario ainda não respondeu a enquete
+
+        // vê as respostas guardadas dos usuarios do dia atual, verifica se a pessoa respondeu mais de uma vez
+        for (DailyPoll resposta : respostas) {
+            if (resposta.getUsuario().equals(usuario)) {
+                status = resposta.getStatus();
+            }
+        }
+
+        return new PollStatusResponse(aberta, status);
     }
 }
