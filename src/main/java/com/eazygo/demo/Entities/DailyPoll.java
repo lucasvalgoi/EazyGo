@@ -17,6 +17,10 @@ public class DailyPoll {
 
     @Getter
     @Setter
+    private String endereco;
+
+    @Getter
+    @Setter
     private PollResponseStatus status;
 
     private LocalDate data; //data da enquete

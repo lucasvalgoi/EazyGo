@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,32 +10,29 @@
         <h2>Enquete de presença para utilização do transporte</h2>
 
         <!-- Nome -->
-        <label>
-            Nome:
-            <input type="text" name="usuario" placeholder="Digite seu nome" required>
-        </label><br><br>
+        <p>Olá, <span th:text="${usuario}"></span>!</p>
+        <input type="hidden" name="usuario" th:value="${usuario}">
 
         <!-- Campo caixa de seleção -->
         <label for="endereco">Endereço:</label>
 
+        <!--th:each = serve para criar as opcoes automaticamente-->
         <select name="endereco" id="endereco" required>
             <option value="" selected disabled>Selecione um endereço</option>
-            <option value="Endereço 1">Endereço 1</option>
-            <option value="Endereço 2">Endereço 2</option>
-            <option value="Endereço 3">Endereço 3</option>
-        </select><br><br>
+            <option th:each="e : ${enderecos}" th:value="${e}" th:text="${e}"></option>
+        </select>
 
         <h3>Você irá utilizar o transporte hoje?</h3>
 
         <!-- Confirmar Presenca -->
         <label>
-            <input type="submit" formaction="/api/poll/confirmar" name="presenca" value="confirmarPresenca" required>
+            <input type="submit" formaction="/api/poll/confirmar" name="presenca" value="Confirmar Presenca" required>
             Sim, confirmo a minha presença
         </label><br><br>
 
         <!-- Cancelar Presenca -->
         <label>
-            <input type="submit" formaction="/api/poll/cancelar" name="presenca" value="CancelarPresenca" required>
+            <input type="submit" formaction="/api/poll/cancelar" name="presenca" value="Cancelar Presenca" required>
             Não, não confirmo a minha presença
         </label><br><br>
     </form>
