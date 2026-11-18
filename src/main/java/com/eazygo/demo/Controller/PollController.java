@@ -29,4 +29,13 @@ public class PollController {
     public PollStatusResponse status(@RequestParam String usuario) {
         return pollService.consultarStatus(usuario);
     }
+
+    @PostMapping("/enquete/votar")
+    public String votarEnquete(@RequestParam String usuario, @RequestParam String endereco, @RequestParam boolean confirmado) {
+
+        // Chama a lógica unificada no PollService
+        pollService.registrarRespostaEnquete(usuario, endereco, confirmado);
+
+        return "redirect:/enquete?usuario=" + usuario;
+    }
 }

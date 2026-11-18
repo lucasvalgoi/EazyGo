@@ -1,18 +1,28 @@
 package com.eazygo.demo.Controller;
 
 import com.eazygo.demo.Entities.Route;
+import com.eazygo.demo.Entities.RotaOtimizada;
+import com.eazygo.demo.Services.OsrmService;
+import com.eazygo.demo.Services.PollService;
 import com.eazygo.demo.Services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController//classe passa a ser um controller REST (API REST - respostas convertidas em JSON)
 @RequestMapping("/api/route")//endereço base das requisições desse controller
 public class RouteController {
     @Autowired//injeção de dependência para a classe routeService
     private RouteService routeService;
+
+    @Autowired
+    private OsrmService osrmService;
+
+    @Autowired
+    private PollService pollService;
 
     //POST /api/routes?userId=1
     @PostMapping//usa da requisição para criar uma nova rota pelo usuário
@@ -42,6 +52,24 @@ public class RouteController {
     @PatchMapping("/{id}/select-today")//usa da requisição para alterar parcialmente um recurso (status de atividade do usuário no dia atual)
     public ResponseEntity<Route> selectRouteForToday(@PathVariable Long id, @RequestBody Long userId){
         return ResponseEntity.ok(routeService.selectTodaysRoute(id, userId));
+    }
+
+    /**
+     * Endpoint para calcular a rota otimizada (OSRM) com TODOS os passageiros confirmados na enquete de hoje
+     * Exemplo de chamada: GET /api/route/calcular-osrm
+     * Resposta: { "distanciaKm": 12.4, "duracaoMin": 31.0, "paradas": ["ORIGEM", "Rua B...", "Rua A...", "DESTINO"] }
+     */
+    @GetMapping("/calcular-osrm")
+    public ResponseEntity<Object> calcularRotaOsrm() {
+        // 1. Pega os endereços confirmados na enquete e calcula a melhor rota (geocodificação + OSRM Trip)
+        Optional<RotaOtimizada> rota = pollService.calcularRotaDoDia();
+
+        if (rota.isEmpty()) {
+            return ResponseEntity.badRequest().body("Nenhum passageiro confirmado ou serviço de rotas indisponível.");
+        }
+
+        // 2. Devolve distância, tempo e ordem das paradas
+        return ResponseEntity.ok(rota.get());
     }
 
 }
