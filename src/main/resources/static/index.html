@@ -12,7 +12,7 @@
         <!-- Nome -->
         <label>
             Nome:
-            <input type="text" name="nome" placeholder="Digite seu nome" required>
+            <input type="text" name="usuario" placeholder="Digite seu nome" required>
         </label><br><br>
 
         <!-- Campo caixa de seleção -->
@@ -29,17 +29,15 @@
 
         <!-- Confirmar Presenca -->
         <label>
-            <input type="radio" formaction="/api/poll/confirmar" name="presenca" value="confirmarPresenca" required>
+            <input type="submit" formaction="/api/poll/confirmar" name="presenca" value="confirmarPresenca" required>
             Sim, confirmo a minha presença
         </label><br><br>
 
         <!-- Cancelar Presenca -->
         <label>
-            <input type="radio" formaction="/api/poll/cancelar" name="presenca" value="CancelarPresenca" required>
+            <input type="submit" formaction="/api/poll/cancelar" name="presenca" value="CancelarPresenca" required>
             Não, não confirmo a minha presença
         </label><br><br>
-
-        <button type="submit">Enviar</button>
     </form>
 </body>
 </html>

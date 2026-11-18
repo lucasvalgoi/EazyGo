@@ -1,18 +1,19 @@
 package com.eazygo.demo.Services;
 
 import com.eazygo.demo.Entities.DailyPoll;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.eazygo.demo.Entities.PollResponseStatus.CANCELADO;
-import static com.eazygo.demo.Entities.PollResponseStatus.CONFIRMADO;
+import static com.eazygo.demo.Entities.PollResponseStatus.*;
 
 @Service
 public class PollService {
 
+    @Getter
     private List<DailyPoll> respostas = new ArrayList<>(); //guardar as respostas da enquete
     private String Usuario;
 
@@ -36,15 +37,25 @@ public class PollService {
     }
 
     public String confirmarPresenca(DailyPoll poll){
-        poll.setStatus(CONFIRMADO);
-        respostas.add(poll);
-        return "Presença Confirmada";
-        //tem que validar horario
+        if(validarHorario(poll)){
+            poll.setStatus(CONFIRMADO);
+            respostas.add(poll);
+            // Ver no terminal as respostas guardas
+            System.out.println(respostas.size() + " resposta(s) guardada(s)");
+            return "Presença Confirmada";
+        }
+        else{
+            poll.setStatus(PENDENTE);
+            System.out.println(respostas.size() + " resposta(s) guardada(s)");
+            return "Presença Cancelada. Você está fora do horário programado!";
+        }
+
     }
 
     public String cancelarPresenca(DailyPoll poll){
         poll.setStatus(CANCELADO);
         respostas.add(poll);
+        System.out.println(respostas.size() + " resposta(s) guardada(s)");
         return "Presença Cancelada";
     }
 }

@@ -1,12 +1,11 @@
 package com.eazygo.demo.Controller;
 import com.eazygo.demo.Entities.DailyPoll;
 import com.eazygo.demo.Services.PollService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class PollController {
 
     private final PollService pollService;
